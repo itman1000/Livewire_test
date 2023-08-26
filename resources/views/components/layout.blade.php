@@ -8,7 +8,7 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     @livewireStyles
 </head>
-<body class="text-slate-700 h-screen">
+<body class="text-slate-700">
     <header>
         <div class="container mx-auto flex justify-between items-center bg-sky-200 py-2 px-4">
             <h1 class="text-2xl font-bold">Livewire Test</h1>
@@ -19,7 +19,7 @@
         </div>
     </header>
 
-    <main class="h-screen">
+    <main>
         {{ $slot }}
     </main>
 

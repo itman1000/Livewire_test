@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
+  purge: [
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
   ],

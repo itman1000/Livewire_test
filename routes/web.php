@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Counter;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthController;
+use App\Livewire\Login;
+use App\Livewire\Register;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +21,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/counter', Counter::class)
-    ->name('counter');
+Route::get('/login', Login::class);
+Route::get('/register', Register::class);
+
+
+// Route::get('/login', [AuthController::class, 'showLoginForm'])
+//     ->name('login');
+
+
+// Route::get('/counter', Counter::class)
+//     ->name('counter');
 
