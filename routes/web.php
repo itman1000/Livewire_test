@@ -3,8 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
-use App\Livewire\Login;
-use App\Livewire\Register;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CategoryTagController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,18 +20,38 @@ use App\Livewire\Register;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function() {
+    if (Auth::check()) {
+        $user = Auth::user();
+        return view('auth.dashboard', ['user' => $user]);
+    } else {
+        return redirect()->action([AuthController::class, 'showLoginForm']);
+    }
 });
 
-Route::get('/login', Login::class);
-Route::get('/register', Register::class);
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
+Route::middleware(['guest'])->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])
+        ->name('auth.showLoginForm');
+    Route::post('/login', [AuthController::class, 'login'])
+        ->name('auth.login');
+    Route::get('/register', [AuthController::class, 'showRegistrationForm'])
+        ->name('auth.showRegistrationForm');
+    Route::post('/register', [AuthController::class, 'register'])
+        ->name('auth.register');
+});
 
-// Route::get('/login', [AuthController::class, 'showLoginForm'])
-//     ->name('login');
-
-
-// Route::get('/counter', Counter::class)
-//     ->name('counter');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])
+        ->name('auth.dashboard');
+    Route::resource('users', UserController::class);
+    Route::resource('restaurants', RestaurantController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('category-tags', CategoryTagController::class);
+    Route::post('/logout', [AuthController::class, 'logout'])
+        ->name('auth.logout');
+});
 
