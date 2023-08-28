@@ -1,4 +1,4 @@
-<div class="w-11/12 h-auto mx-8 my-8">
+<div class="w-11/12 h-screen my-8 mx-8">
     <h2 class="text-lg mb-5">カテゴリー管理</h2>
 
     <form action="{{ route('categories.store') }}" method="POST" class="w-full mb-5 gap-2.5">
@@ -6,11 +6,11 @@
         <div class="w-full mb-2">
             <label for="text">新規カテゴリー<span class="text-red-500 ml-1 leading-5">*</span></label>
         </div>
-        <input type="text" name="name" class="w-2/5 p-1 mr-2 border border-gray-400 rounded-md" placeholder="新規カテゴリー名を入力">
+        <input type="text" name="name" placeholder="新規カテゴリー名を入力" class="w-2/5 p-1 mr-2 border border-gray-400 rounded-md">
         <button type="submit" class="border p-1 rounded-md border-gray-500 bg-gray-300 hover:bg-gray-200">登録</button>
     </form>
 
-    <table class="w-3/5 border-collapse ">
+    <table class="w-3/5 border-collapse">
         <thead>
             <tr>
                 <th class="border border-gray-400 px-2 py-3 text-left w-7">ID</th>
@@ -40,7 +40,7 @@
                     <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="w-12 h-7 bg-red-500 text-white border-none rounded-md duration-200 hover:bg-red-300" onclick="return confirm('本当にこのカテゴリを削除しますか？');">削除</button>
+                        <button type="submit" onclick="return confirm('本当にこのカテゴリを削除しますか？');" class="w-12 h-7 bg-red-500 text-white border-none rounded-md duration-200 hover:bg-red-300">削除</button>
                     </form>
                 </td>
             </tr>

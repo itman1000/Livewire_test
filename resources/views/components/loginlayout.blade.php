@@ -8,9 +8,9 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     @livewireStyles
 </head>
-<body class="text-slate-700 h-screen">
-    <div class="flex h-screen w-full">
-        <aside class="w-1/5 bg-emerald-400 text-white py-5 shadow shadow-gray-300">
+<body class="text-slate-700 h-max">
+    <div class="flex h-max w-full">
+        <aside class="w-60 h-auto flex-shrink-0 bg-emerald-400 text-white py-5 shadow shadow-gray-300">
             <h1 class="mb-14 font-black text-2xl text-center">Gourmet Log</h1>
             <ul class="text-center text-base">
                 <li class="py-4 border-t border-b border-white text-lg">MENU</li>
