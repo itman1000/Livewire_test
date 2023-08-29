@@ -8,8 +8,8 @@
         </div>
 
         <div class="mb-4 ml-20">
-            <label for="name_kana" class="block mb-1">店名 フリガナ<span class="text-red-500 ml-1 leading-5">*</span></label>
-            <input type="text" id="name_kana" name="name_kana" wire:model="name_kana" placeholder="フリガナを入力" class="w-4/5 p-1 mr-2 border border-gray-400 rounded-md">
+            <label for="name_katakana" class="block mb-1">店名 フリガナ<span class="text-red-500 ml-1 leading-5">*</span></label>
+            <input type="text" id="name_katakana" name="name_katakana" wire:model="name_katakana" placeholder="フリガナを入力" class="w-4/5 p-1 mr-2 border border-gray-400 rounded-md">
         </div>
 
         <div class="mb-4 ml-20">
@@ -57,13 +57,13 @@
         </div>
 
         <div class="flex justify-center">
-            <button type="submit" class="border py-1 px-6 mb-8 rounded-md border-gray-500 hover:bg-gray-200">確認画面へ</button>
+            <button type="submit" class="border py-1 px-6 mb-2 rounded-md border-gray-500 hover:bg-gray-200">確認画面へ</button>
         </div>
     </form>
 
-    <div class="text-xs text-red-500 text-center mt-10">
+    <div class="text-xs text-red-500 text-center mt-2">
         @error('name') <span class="error">{{ $message }}</span> @enderror
-        @error('name_kana') <span class="error">{{ $message }}</span> @enderror
+        @error('name_katakana') <span class="error">{{ $message }}</span> @enderror
         @error('selected_categories') <span class="error">{{ $message }}</span> @enderror
         @error('review') <span class="error">{{ $message }}</span> @enderror
         @error('image') <span class="error">{{ $message }}</span> @enderror
@@ -75,9 +75,9 @@
     @if($showConfirmationModal)
     <div class="fixed inset-0 flex items-center justify-center z-10">
         <div class="bg-white p-8 rounded-lg shadow-lg w-3/4 md:w-2/3 lg:w-1/2 z-20">
-            <h3 class="text-xl font-bold mb-4 self-center">確認画面</h3>
+            <h3 class="text-xl font-bold mb-4 text-center">確認画面</h3>
             <p class="my-2">店名: {{ $name }}</p>
-            <p class="my-2">店名 フリガナ: {{ $name_kana }}</p>
+            <p class="my-2">店名 フリガナ: {{ $name_katakana }}</p>
             <p class="my-2">カテゴリー:
                 @foreach($categories as $category)
                     @if(in_array($category->id, $this->selected_categories))
@@ -96,7 +96,13 @@
                 <div class="my-2 ml-8">
                     <p class="my-2">Google Map</P>
                     @if($map_url)
-                        <iframe src="{{ $map_url }}" width="240" height="180" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        {{-- {{ urldecode($map_url) }} --}}
+                        <iframe
+                            width="240"
+                            height="180"
+                            frameborder="0" style="border:0"
+                            src="{{ $available_map_url }}" allowfullscreen>
+                        </iframe>
                     @endif
                 </div>
             </div>

@@ -55,9 +55,9 @@ class RestaurantController extends Controller
     public function edit($id)
     {
         $restaurant = Restaurant::findOrFail($id);
-        $categories = Category::all();
-        return view('restaurants.edit', ['restaurant' => $restaurant, 'categories' => $categories]);
+        return view('restaurants.edit', ['restaurant' => $restaurant]);
     }
+
 
     public function update(Request $request, $id)
     {

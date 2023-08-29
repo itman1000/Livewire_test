@@ -15,6 +15,6 @@ class Category extends Model
 
     public function restaurants()
     {
-        return $this->belongsToMany(Restaurant::class, 'category_tags');
+        return $this->belongsToMany(Restaurant::class, 'category_tags')->withTimestamps();
     }
 }
