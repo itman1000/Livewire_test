@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
 {
+    public $showDetail = false;
+    public $selectedRestaurantId = null;
+
     public function index()
     {
         $restaurants = Restaurant::all();
@@ -91,6 +94,11 @@ class RestaurantController extends Controller
         $restaurant->delete();
 
         return redirect()->route('restaurants.index');
+    }
+
+    public function showDetail($restaurantId) {
+        $this->showDetail = true;
+        $this->selectedRestaurantId = $restaurantId;
     }
 }
 

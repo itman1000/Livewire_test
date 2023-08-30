@@ -18,6 +18,7 @@ class ShopForm extends Component
     public $categories;
     public $review = 5;
     public $image;
+    public $food_picture;
     public $map_url;
     public $available_map_url;
     public $phone;
@@ -77,7 +78,7 @@ class ShopForm extends Component
             $this->name = $this->restaurant->name;
             $this->name_katakana = $this->restaurant->name_katakana;
             $this->review = $this->restaurant->review;
-            $this->image = $this->restaurant->image;
+            $this->food_picture = $this->restaurant->food_picture;
             $this->map_url = $this->restaurant->map_url;
             $this->phone = $this->restaurant->phone;
             $this->comment = $this->restaurant->comment;
@@ -103,7 +104,7 @@ class ShopForm extends Component
         $this->validate();
 
         if ($this->image) {
-            $imageName = $this->image->store('restaurants', 'public');
+            $food_picture = $this->image->store('restaurants', 'public');
         }
 
         if (!$this->restaurant) {
@@ -112,7 +113,7 @@ class ShopForm extends Component
                 'name' => $this->name,
                 'name_katakana' => $this->name_katakana,
                 'review' => $this->review,
-                'image' => $imageName ?? null,
+                'food_picture' => $food_picture ?? null,
                 'map_url' => $this->map_url ?? null,
                 'phone' => $this->phone,
                 'comment' => $this->comment,
@@ -123,7 +124,7 @@ class ShopForm extends Component
                 'name' => $this->name,
                 'name_katakana' => $this->name_katakana,
                 'review' => $this->review,
-                'image' => $imageName ?? null,
+                'food_picture' => $food_picture ?? $this->food_picture,
                 'map_url' => $this->map_url ?? null,
                 'phone' => $this->phone,
                 'comment' => $this->comment,

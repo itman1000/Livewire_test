@@ -91,12 +91,13 @@
                     <p class="my-2">料理画面<p>
                     @if($image)
                         <img src="{{ $image->temporaryUrl() }}" alt="Uploaded Image" width="240">
+                    @elseif ($restaurant)
+                        <img src="{{ asset('storage/' . $food_picture) }}" alt="Default Image" width="240" height="180">
                     @endif
                 </div>
                 <div class="my-2 ml-8">
                     <p class="my-2">Google Map</P>
                     @if($map_url)
-                        {{-- {{ urldecode($map_url) }} --}}
                         <iframe
                             width="240"
                             height="180"
