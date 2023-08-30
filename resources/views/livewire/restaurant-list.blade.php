@@ -1,16 +1,14 @@
 <div class="w-screen h-auto">
     @if($showDetail)
-        {{-- <div class="absolute top-0 left-0 w-full h-full bg-white z-50"> --}}
-            <livewire:restaurant-detail :restaurantId="$selectedRestaurantId">
-            {{-- <button wire:click="$set('showDetail', false)" class="absolute top-0 right-0 m-4 p-2 bg-red-500 text-white rounded">閉じる</button> --}}
-        </div>
+        <livewire:restaurant-detail :restaurantId="$selectedRestaurantId">
     @else
         <div class="w-11/12 h-screen my-8 mx-8">
             <h2 class="text-lg mb-5">お店リスト</h2>
 
             <div class="w-full mb-5 flex gap-2.5">
-                <input type="text" placeholder="店名やカテゴリで検索..." id="shopSearch" class="w-2/5 p-1 border border-gray-400 rounded-md">
-                <button id="searchBtn" class="border p-1 rounded-md border-gray-500 bg-gray-300 hover:bg-gray-200">検索</button>
+                <input type="text" wire:model="search" placeholder="店名やカテゴリで検索..." class="w-1/4 p-1 border border-gray-400 rounded-md">
+                <button wire:click="executeSearch" class="border p-1 rounded-md border-gray-500 bg-gray-300 hover:bg-gray-200">検索</button>
+                <a href="{{ route('restaurants.export') }}" class="bg-blue-500 text-white px-4 py-2 ml-24 rounded-md hover:bg-blue-300">CSVダウンロード</a>
             </div>
 
             <table class="w-11/12 border-collapse">

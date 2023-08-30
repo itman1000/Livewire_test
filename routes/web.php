@@ -45,6 +45,8 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/restaurants/export', [RestaurantController::class, 'export'])
+    ->name('restaurants.export');
     Route::get('/dashboard', [AuthController::class, 'dashboard'])
         ->name('auth.dashboard');
     Route::resource('users', UserController::class);

@@ -6,7 +6,7 @@
         <div class="w-full mb-2">
             <label for="text">新規カテゴリー<span class="text-red-500 ml-1 leading-5">*</span></label>
         </div>
-        <input type="text" name="name" placeholder="新規カテゴリー名を入力" class="w-2/5 p-1 mr-2 border border-gray-400 rounded-md">
+        <input type="text" name="name" placeholder="新規カテゴリー名を入力" class="w-1/5 p-1 mr-2 border border-gray-400 rounded-md">
         <button type="submit" class="border p-1 rounded-md border-gray-500 bg-gray-300 hover:bg-gray-200">登録</button>
     </form>
 

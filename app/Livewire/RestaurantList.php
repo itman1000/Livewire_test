@@ -11,6 +11,7 @@ class RestaurantList extends Component
     public $restaurants;
     public $showDetail = false;
     public $selectedRestaurantId = null;
+    public $search = '';
 
     public function mount()
     {
@@ -28,8 +29,20 @@ class RestaurantList extends Component
         $this->selectedRestaurantId = null;
     }
 
+    public function executeSearch()
+    {
+        $this->restaurants = Restaurant::query()
+            ->where('name', 'like', '%' . $this->search . '%')
+            ->orWhereHas('categories', function ($query) {
+                $query->where('name', 'like', '%' . $this->search . '%');
+            })
+            ->get();
+    }
+
     public function render()
     {
-        return view('livewire.restaurant-list');
+        return view('livewire.restaurant-list', [
+            'restaurants' => $this->restaurants
+        ]);
     }
 }
