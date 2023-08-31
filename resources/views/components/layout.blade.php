@@ -10,7 +10,7 @@
 </head>
 <body class="text-slate-700 h-screen">
     <header>
-        <div class="container mx-auto flex justify-between items-center bg-emerald-200 py-2 px-4">
+        <div class="mx-auto flex justify-between items-center bg-emerald-200 py-2 px-8 w-full">
             <h1 class="text-2xl font-bold">Livewire Test</h1>
             <div class="">
                 <a href="/login" wire:navigate class="mx-2 hover:cursor-pointer font-light">ログイン</a>

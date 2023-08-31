@@ -4,9 +4,12 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Category;
+use Livewire\WithPagination;
 
 class CategoryHandler extends Component
 {
+    use WithPagination;
+
     public $categories;
     public $editingId = null;
     public $editingName = '';
@@ -70,6 +73,6 @@ class CategoryHandler extends Component
 
     public function render()
     {
-        return view('livewire.category-handler');
+        return view('livewire.category-handler', ['categoriesList' => Category::paginate(5)]);
     }
 }

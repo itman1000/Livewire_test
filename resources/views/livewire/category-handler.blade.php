@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($categories as $category)
+            @foreach($categoriesList as $category)
             <tr>
                 <td class="border border-gray-400 px-2 py-3 text-left w-7">{{ $category->id }}</td>
                 @if($editingId === $category->id)
@@ -46,8 +46,11 @@
             </tr>
             @endforeach
         </tbody>
-
     </table>
+
+    <div class="flex justify-center mt-10">
+        {{ $categoriesList->links() }}
+    </div>
 
     @if ($errors->any())
         <div class="errors">

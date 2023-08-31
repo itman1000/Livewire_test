@@ -25,13 +25,10 @@ Route::get('/', function() {
         $user = Auth::user();
         return view('auth.dashboard', ['user' => $user]);
     } else {
-        return redirect()->action([AuthController::class, 'showLoginForm']);
+        return view('welcome');
     }
 });
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])
@@ -56,4 +53,3 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('auth.logout');
 });
-

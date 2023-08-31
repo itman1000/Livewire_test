@@ -6,7 +6,17 @@
             {{ $category->name }}
         @endforeach
     </p>
-    <p class="my-3">レビュー: {{ $restaurant->review }}</p>
+    <p class="my-3">
+        レビュー:
+        @for ($i = 1; $i <= 5; $i++)
+            @if ($i <= $restaurant->review)
+                <i class="fas fa-star text-yellow-500"></i>
+            @else
+                <i class="far fa-star text-yellow-500"></i>
+            @endif
+        @endfor
+    </p>
+
     <div class="w-full m-auto flex flex-col items-center justify-center">
         <p class="mt-8 mb-4 text-center">料理写真<p>
         <div class="w-96 h-60 relative">

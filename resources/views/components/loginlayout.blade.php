@@ -6,6 +6,7 @@
     <title class="w-full bg-gray-200 border-b border-b-gray-300 rougded-md">Gourmet Log</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     @livewireStyles
 </head>
 <body class="text-slate-700 h-max">

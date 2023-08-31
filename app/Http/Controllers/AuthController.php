@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Services\HotpepperService;
 
 class AuthController extends Controller
 {
@@ -57,10 +58,40 @@ class AuthController extends Controller
         return redirect()->route('auth.dashboard', ['user' => $user]);
     }
 
-    public function dashboard()
+    public function dashboard(HotpepperService $hotpepperService)
     {
         $user = Auth::user();
-        return view('auth.dashboard', ['user' => $user]);
+
+        $params = [
+            'large_area' => 'Z022',
+            'count' => 10,
+            'order' => 4,
+        ];
+
+        $result = $hotpepperService->searchRestaurants($params);
+
+
+        $greetings = [
+            "今週試してみたいお店は見つかりましたか？",
+            "今日は新しい味を冒険してみませんか？",
+            "今日はどんな国の料理に挑戦しましょうか？",
+            "今日の気分を上げるための絶品料理を探しましょう！",
+            "今日は家族や友人との食事の場所を探してみませんか？",
+            "新しい料理やお店を発見するのは今日の一つの楽しみですね！",
+            "今日の気分に合ったお店を見つけましょう！",
+            "今日は何を食べたい気分ですか？",
+            "お腹が空いてきたら新しいお店を探してみませんか？",
+            "今日はどんな美味しいものを発見しましょうか？",
+        ];
+
+        $randomGreeting = $greetings[array_rand($greetings)];
+
+
+        return view('auth.dashboard', [
+            'user' => $user,
+            'restaurants' => $result['results']['shop'],
+            'randomGreeting' => $randomGreeting,
+        ]);
     }
 
     public function logout()

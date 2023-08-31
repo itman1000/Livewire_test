@@ -5,9 +5,13 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Restaurant;
 use Livewire\Attributes\On;
+use Livewire\WithPagination;
+
 
 class RestaurantList extends Component
 {
+    use WithPagination;
+
     public $restaurants;
     public $showDetail = false;
     public $selectedRestaurantId = null;
@@ -41,8 +45,6 @@ class RestaurantList extends Component
 
     public function render()
     {
-        return view('livewire.restaurant-list', [
-            'restaurants' => $this->restaurants
-        ]);
+        return view('livewire.restaurant-list', ['restaurantsList' => Restaurant::paginate(5)]);
     }
 }

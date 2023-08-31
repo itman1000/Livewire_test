@@ -25,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($restaurants as $restaurant)
+                    @foreach($restaurantsList as $restaurant)
                     <tr>
                         <td class="border border-gray-400 px-2 py-3 text-left">{{ $restaurant->id }}</td>
                         <td class="border border-gray-400 px-2 py-3 text-left">{{ $restaurant->name }}</td>
@@ -53,6 +53,10 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <div class="flex justify-center mt-10">
+                {{ $restaurantsList->links() }}
+            </div>
         </div>
     @endif
 </div>
