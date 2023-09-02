@@ -86,7 +86,6 @@ class AuthController extends Controller
 
         $randomGreeting = $greetings[array_rand($greetings)];
 
-
         return view('auth.dashboard', [
             'user' => $user,
             'restaurants' => $result['results']['shop'],

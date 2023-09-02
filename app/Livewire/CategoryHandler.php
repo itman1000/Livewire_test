@@ -10,9 +10,21 @@ class CategoryHandler extends Component
 {
     use WithPagination;
 
+    public $name;
     public $categories;
     public $editingId = null;
     public $editingName = '';
+
+    protected $rules = [
+        'name' => 'required|string|max:10',
+    ];
+
+    protected $messages = [
+        'name.required' => '名前を入力してください',
+        'name.string' => '文字で入力してください',
+        'name.max' => ':max文字以内で入力してください',
+    ];
+
 
     public function mount()
     {
@@ -21,15 +33,10 @@ class CategoryHandler extends Component
 
     public function store()
     {
-        $validatedData = $this->validate([
-            'name' => 'required|string|max:10',
-        ],[
-            'name.required' => '名前を入力してください',
-            'name.string' => '文字で入力してください',
-            'name.max' => ':max文字以内で入力してください',
-        ]);
+        $this->validate();
 
-        Category::create($validatedData);
+        Category::create(['name' => $this->name]);
+        $this->name = '';
         $this->categories = Category::all();
     }
 
@@ -41,19 +48,13 @@ class CategoryHandler extends Component
 
     public function update()
     {
-        $validatedData = $this->validate([
-            'editingName' => 'required|max:10|string',
-        ],[
-            'editingName.required' => '名前を入力してください',
-            'editingName.string' => '文字で入力してください',
-            'editingName.max' => ':max文字以内で入力してください',
-        ]);
-
         if ($this->editingId) {
-            $category = Category::find($this->editingId);
-            $category->name = $validatedData['editingName'];
-            $category->save();
+            $this->name = $this->editingName;
+            $this->validate();
+            Category::find($this->editingId)->update(['name' => $this->editingName]);
             $this->editingId = null;
+            $this->editingName = '';
+            $this->name = '';
             $this->categories = Category::all();
         }
     }

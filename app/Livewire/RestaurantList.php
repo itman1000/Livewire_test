@@ -7,19 +7,20 @@ use App\Models\Restaurant;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
-
 class RestaurantList extends Component
 {
     use WithPagination;
 
-    public $restaurants;
     public $showDetail = false;
     public $selectedRestaurantId = null;
     public $search = '';
+    public $page = 1;
+    protected $queryString = ['page'];
 
-    public function mount()
+
+    public function mount($page = 1)
     {
-        $this->restaurants = Restaurant::all();
+        $this->page = $page;
     }
 
     public function showRestaurantDetail($restaurantId) {
@@ -33,18 +34,34 @@ class RestaurantList extends Component
         $this->selectedRestaurantId = null;
     }
 
+    public function destroy($id)
+    {
+        $restaurant = Restaurant::findOrFail($id);
+        $restaurant->delete();
+        $this->restaurants = Restaurant::all();
+    }
+
     public function executeSearch()
     {
-        $this->restaurants = Restaurant::query()
-            ->where('name', 'like', '%' . $this->search . '%')
-            ->orWhereHas('categories', function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%');
-            })
-            ->get();
+        $query = Restaurant::query();
+
+        if (!empty($this->search)) {
+            $query->where('name', 'like', '%' . $this->search . '%')
+                ->orWhereHas('categories', function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%');
+                });
+        }
+
+        return $query->paginate(5);
     }
 
     public function render()
     {
-        return view('livewire.restaurant-list', ['restaurantsList' => Restaurant::paginate(5)]);
+        $restaurants = $this->executeSearch();
+        $this->page = $restaurants->currentPage();
+
+        return view('livewire.restaurant-list', [
+            'restaurants' => $restaurants,
+        ]);
     }
 }

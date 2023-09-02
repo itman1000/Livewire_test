@@ -24,6 +24,7 @@ class ShopForm extends Component
     public $phone;
     public $comment;
     public $restaurant = null;
+    public $page;
 
     public $showConfirmationModal;
 
@@ -68,13 +69,13 @@ class ShopForm extends Component
         'comment.max' => 'コメントは最大150文字までです。',
     ];
 
-    public function mount(Restaurant $restaurant = null)
+    public function mount($restaurant = null, $page = 1)
     {
         $this->showConfirmationModal = false;
 
-        if ($restaurant->exists) {
+        if ($restaurant) {
+            $this->page = $page;
             $this->restaurant = $restaurant;
-            $this->category = $this->restaurant->category;
             $this->name = $this->restaurant->name;
             $this->name_katakana = $this->restaurant->name_katakana;
             $this->review = $this->restaurant->review;
@@ -82,6 +83,7 @@ class ShopForm extends Component
             $this->map_url = $this->restaurant->map_url;
             $this->phone = $this->restaurant->phone;
             $this->comment = $this->restaurant->comment;
+            $this->selected_categories = $this->restaurant->categories->pluck('id')->toArray();
         }
     }
 
@@ -103,6 +105,8 @@ class ShopForm extends Component
     {
         $this->validate();
 
+        $this->showConfirmationModal = false;
+
         if ($this->image) {
             $food_picture = $this->image->store('restaurants', 'public');
         }
@@ -119,6 +123,21 @@ class ShopForm extends Component
                 'comment' => $this->comment,
             ]);
             $restaurant->categories()->sync($this->selected_categories);
+
+            $this->name = null;
+            $this->name_katakana = null;
+            $this->selected_categories = [];
+            $this->review = 5;
+            $this->image = null;
+            $this->food_picture = null;
+            $this->map_url = null;
+            $this->available_map_url = null;
+            $this->phone = null;
+            $this->comment = null;
+            $this->restaurant = null;
+
+            session()->flash('message', 'お店を1件登録しました。');
+            return view('livewire.shop-form');
         } else {
             $this->restaurant->update([
                 'name' => $this->name,
@@ -130,11 +149,8 @@ class ShopForm extends Component
                 'comment' => $this->comment,
             ]);
             $this->restaurant->categories()->sync($this->selected_categories);
+            return redirect()->route('restaurants.index', ['page' => $this->page]);
         }
-
-        $this->showConfirmationModal = false;
-
-        return view('livewire.shop-form');
     }
 
     public function render()

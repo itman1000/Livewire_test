@@ -16,7 +16,7 @@
             <ul class="text-center text-base">
                 <li class="py-4 border-t border-b border-white text-lg">MENU</li>
                 <li class="py-3 mt-4 hover:bg-white hover:text-gray-500"><a href="/restaurants">お店リスト</a></li>
-                <li class="py-3 hover:bg-white hover:text-gray-500"><a href="/restaurants/create">お店登録／編集</a></li>
+                <li class="py-3 hover:bg-white hover:text-gray-500"><a href="/restaurants/create">お店登録</a></li>
                 <li class="py-3 hover:bg-white hover:text-gray-500"><a href="/categories">カテゴリー管理</a></li>
                 <li class="py-3 hover:bg-white hover:text-gray-500">
                     <form method="POST" action="{{ route('auth.logout') }}">

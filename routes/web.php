@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryTagController;
+use App\Services\HotpepperService;
 
 
 /*
@@ -47,7 +48,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])
         ->name('auth.dashboard');
     Route::resource('users', UserController::class);
-    Route::resource('restaurants', RestaurantController::class);
+    Route::get('/restaurants/{id}/edit', [RestaurantController::class, 'edit'])
+        ->name('restaurants.edit');
+    Route::resource('restaurants', RestaurantController::class)->except(['edit']);
     Route::resource('categories', CategoryController::class);
     Route::resource('category-tags', CategoryTagController::class);
     Route::post('/logout', [AuthController::class, 'logout'])

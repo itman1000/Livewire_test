@@ -1,3 +1,3 @@
 <x-loginlayout>
-    <livewire:restaurant-list />
+    <livewire:restaurant-list :page="$page" />
 </x-loginlayout>

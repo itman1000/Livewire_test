@@ -17,10 +17,16 @@
             <div class="flex flex-wrap">
                 @foreach ($categories as $category)
                     <div class="mr-4 mb-2 flex-shrink-0">
-                        <input type="checkbox" id="category_{{ $category->id }}" name="selected_categories[]" value="{{ $category->id }}" wire:model="selected_categories">
+                        <input type="checkbox"
+                            id="category_{{ $category->id }}"
+                            name="selected_categories[]"
+                            value="{{ $category->id }}"
+                            wire:model="selected_categories"
+                            {{ in_array($category->id, $selected_categories) ? 'checked' : '' }}>
                         <label for="category_{{ $category->id }}" class="ml-1">{{ $category->name }}</label>
                     </div>
                 @endforeach
+
             </div>
         </div>
 
@@ -36,7 +42,7 @@
         </div>
 
         <div class="mb-4 ml-20">
-            <label for="image" class="block mb-1">料理画面</label>
+            <label for="image" class="block mb-1">料理画像</label>
             <input type="file" id="image" name="image" wire:model="image">
         </div>
 
@@ -85,7 +91,16 @@
                     @endif
                 @endforeach
             </p>
-            <p class="my-2">レビュー: {{ $review }}</p>
+            <p class="my-2">
+                レビュー:
+                @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= $review)
+                        <i class="fas fa-star text-yellow-500"></i>
+                    @else
+                        <i class="far fa-star text-yellow-500"></i>
+                    @endif
+                @endfor
+            </p>
             <div class="flex">
                 <div class="my-2">
                     <p class="my-2">料理画面<p>
@@ -118,5 +133,11 @@
         <div class="absolute inset-0 bg-black opacity-50"></div>
     </div>
     @endif
+
+    @if (session('message'))
+    <div class="text-blue-500 text-sm text-center">
+        {{ session('message') }}
+    </div>
+@endif
 
 </div>

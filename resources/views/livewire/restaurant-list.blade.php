@@ -2,7 +2,7 @@
     @if($showDetail)
         <livewire:restaurant-detail :restaurantId="$selectedRestaurantId">
     @else
-        <div class="w-11/12 h-screen my-8 mx-8">
+        <div class="w-11/12 h-screen my-8 mx-auto">
             <h2 class="text-lg mb-5">お店リスト</h2>
 
             <div class="w-full mb-5 flex gap-2.5">
@@ -11,7 +11,7 @@
                 <a href="{{ route('restaurants.export') }}" class="bg-blue-500 text-white px-4 py-2 ml-24 rounded-md hover:bg-blue-300">CSVダウンロード</a>
             </div>
 
-            <table class="w-11/12 border-collapse">
+            <table class="w-full border-collapse">
                 <thead>
                     <tr>
                         <th class="border border-gray-400 px-2 py-3 text-left w-7">ID</th>
@@ -25,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($restaurantsList as $restaurant)
+                    @foreach($restaurants as $restaurant)
                     <tr>
                         <td class="border border-gray-400 px-2 py-3 text-left">{{ $restaurant->id }}</td>
                         <td class="border border-gray-400 px-2 py-3 text-left">{{ $restaurant->name }}</td>
@@ -40,22 +40,18 @@
                             <button wire:click="showRestaurantDetail({{ $restaurant->id }})" class="w-12 h-7 bg-green-500 text-white border-none rounded-md duration-200 hover:bg-green-300">詳細</button>
                         </td>
                         <td class="border border-gray-400 px-2 py-3 text-center w-12">
-                            <a href="{{ route('restaurants.edit', $restaurant->id) }}" class="block w-12 h-7 pt-0.5 bg-blue-500 text-white border-none rounded-md duration-200 hover:bg-blue-300">編集</a>
+                            <a href="{{ route('restaurants.edit', ['id' => $restaurant->id, 'page' => $page]) }}" class="block w-12 h-7 pt-0.5 bg-blue-500 text-white border-none rounded-md duration-200 hover:bg-blue-300">編集</a>
                         </td>
                         <td class="border border-gray-400 px-2 py-3 text-center w-12">
-                            <form action="{{ route('restaurants.destroy', $restaurant->id) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" onclick="return confirm('本当に削除しますか？');" class="w-12 h-7 bg-red-500 text-white border-none rounded-md duration-200 hover:bg-red-300">削除</button>
-                            </form>
+                            <button onclick="if(confirm('本当にこのカテゴリを削除しますか？')) @this.call('destroy', {{ $restaurant->id }})" class="w-12 h-7 bg-red-500 text-white border-none rounded-md duration-200 hover:bg-red-300">削除</button>
                         </td>
+
                     </tr>
                     @endforeach
                 </tbody>
             </table>
-
             <div class="flex justify-center mt-10">
-                {{ $restaurantsList->links() }}
+                {{ $restaurants->links() }}
             </div>
         </div>
     @endif
