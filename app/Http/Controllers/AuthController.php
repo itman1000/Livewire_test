@@ -9,9 +9,34 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Services\HotpepperService;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        $googleUser = Socialite::driver('google')->user();
+
+        $user = User::where('email', $googleUser->email)->first();
+
+        if (!$user) {
+            $user = User::create([
+                'name' => $googleUser->name,
+                'email' => $googleUser->email,
+                'password' => NULL,
+            ]);
+        }
+
+        Auth::login($user);
+
+        return redirect()->route('auth.dashboard', ['user' => $user]);
+    }
+
     public function showLoginForm()
     {
         return view('auth.login');
@@ -34,22 +59,6 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        // $request->validate([
-        //     'name' => 'required|max:30',
-        //     'email' => 'required|email|unique:users|max:50',
-        //     'password' => 'required|min:8|confirmed',
-        // ],[
-        //     'name.required' => '名前を入力してください',
-        //     'name.max' => '30文字以内で入力してください',
-        //     'email.required' => 'メールアドレスを入力してください',
-        //     'email.email' => '@を付けてメールアドレスの形式にしてください',
-        //     'email.unique' => 'そのメールアドレスはすでに登録されています',
-        //     'email.max' => '50文字以内で入力してください',
-        //     'password.required' => 'パスワードを入力してください',
-        //     'password.min' => ':min文字以上入力してください',
-        //     'password.confirmed' => 'パスワードが一致しません',
-        // ]);
-
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;

@@ -42,6 +42,11 @@ Route::middleware(['guest'])->group(function () {
         ->name('auth.register');
 });
 
+Route::get('/login/google', [AuthController::class, 'redirectToGoogle'])
+    ->name('login.google');
+Route::get('/login/google/callback', [AuthController::class, 'handleGoogleCallback'])
+    ->name('login.google.callback');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/restaurants/export', [RestaurantController::class, 'export'])
     ->name('restaurants.export');

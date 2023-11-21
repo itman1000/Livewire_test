@@ -23,8 +23,11 @@
                         <button type="submit" class="px-4 py-2 mt-4 bg-blue-600 text-white rounded-md hover:bg-blue-400">ログイン</button>
                     </div>
                 </form>
+
+                <a href="{{ route('login.google') }}" class="px-4 py-2 mt-4 bg-red-600 text-white rounded-md hover:bg-red-400">Googleでログイン</a>
             </div>
         </div>
+
         @if($errors->any())
             <div class="errors">
                 <ul class="text-xs text-red-500 text-center mt-5">
